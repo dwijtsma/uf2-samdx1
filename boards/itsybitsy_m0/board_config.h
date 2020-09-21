@@ -12,6 +12,9 @@
 #define USB_VID 0x239A
 #define USB_PID 0x000F
 
+//Disable all leds for applications that can't deliver suffiencient current
+#define LOW_POWER_MODE
+
 #define LED_PIN PIN_PA17
 
 #define BOARD_RGBLED_CLOCK_PIN            PIN_PA00

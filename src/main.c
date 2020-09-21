@@ -133,7 +133,7 @@ static void check_start_application(void) {
 
     LED_MSC_OFF();
 
-#if defined(BOARD_RGBLED_CLOCK_PIN)
+#if defined(BOARD_RGBLED_CLOCK_PIN) && !defined(LOW_POWER_MODE)
     // This won't work for neopixel, because we're running at 1MHz or thereabouts...
     RGBLED_set_color(COLOR_LEAVE);
 #endif

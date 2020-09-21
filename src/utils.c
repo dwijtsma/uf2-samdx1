@@ -171,12 +171,12 @@ void led_signal() {
 }
 
 void led_init() {
-#if defined(LED_PIN)
+#if defined(LED_PIN) && !defined(LOW_POWER_MODE)
     PINOP(LED_PIN, DIRSET);
 #endif
     LED_MSC_ON();
 
-#if defined(BOARD_RGBLED_CLOCK_PIN)
+#if defined(BOARD_RGBLED_CLOCK_PIN) && !defined(LOW_POWER_MODE)
     // using APA102, set pins to outputs
     PINOP(BOARD_RGBLED_CLOCK_PIN, DIRSET);
     PINOP(BOARD_RGBLED_DATA_PIN, DIRSET);
@@ -190,18 +190,19 @@ void led_init() {
     screen_early_init();
 #endif
 
-#if defined(LED_TX_PIN)
+#if defined(LED_TX_PIN) && !defined(LOW_POWER_MODE)
     PINOP(LED_TX_PIN, DIRSET);
     LED_TX_OFF();
 #endif
 
-#if defined(LED_RX_PIN)
+#if defined(LED_RX_PIN) && !defined(LOW_POWER_MODE)
     PINOP(LED_RX_PIN, DIRSET);
     LED_RX_OFF();
 #endif
 }
 
-#if defined(BOARD_RGBLED_CLOCK_PIN)
+
+#if defined(BOARD_RGBLED_CLOCK_PIN) && !defined(LOW_POWER_MODE)
 void write_apa_byte(uint8_t x) {
     for (uint8_t i = 0x80; i != 0; i >>= 1) {
         if (x & i)
@@ -221,7 +222,7 @@ void write_apa_byte(uint8_t x) {
 #endif
 
 void RGBLED_set_color(uint32_t color) {
-#if defined(BOARD_RGBLED_CLOCK_PIN)
+#if defined(BOARD_RGBLED_CLOCK_PIN) && !defined(LOW_POWER_MODE)
     write_apa_byte(0x0);
     write_apa_byte(0x0);
     write_apa_byte(0x0);
@@ -239,7 +240,7 @@ void RGBLED_set_color(uint32_t color) {
 
     // set clock port low for ~10ms
     delay(50);
-#elif defined(BOARD_NEOPIXEL_PIN)
+#elif defined(BOARD_NEOPIXEL_PIN) && !defined(LOW_POWER_MODE)
     uint8_t buf[BOARD_NEOPIXEL_COUNT * 3];
 #if 0
     memset(buf, 0, sizeof(buf));
